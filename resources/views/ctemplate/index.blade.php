@@ -35,10 +35,10 @@
                             <p class="mb-0 fw-normal">{{ substr($tmp['created_at'], 0, 10) }}</p>
                         </td>
                         <td class="border-bottom-0">
-                            <a href="/admin/ctemplate/edit/{{ encrypt($tmp['id']) }}" class="btn btn-primary mb-0 shadow"><i class="ti ti-pencil me-2"></i>Edit</a>
+                            <a href="/ctemplates/edit/{{ encrypt($tmp['id']) }}" class="btn btn-primary mb-0 shadow"><i class="ti ti-pencil me-2"></i>Edit</a>
                         </td>
                         <td class="border-bottom-0">
-                            <form action="/admin/ctemplate/delete/{{ encrypt($tmp['id']) }}" method="POST">
+                            <form action="/ctemplates/delete/{{ encrypt($tmp['id']) }}" method="POST">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger mb-0 shadow"><i class="ti ti-trash me-2"></i>Delete</button>
