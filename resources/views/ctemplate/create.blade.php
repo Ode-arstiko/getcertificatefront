@@ -1,0 +1,2 @@
+<iframe src="http://localhost:8000/canvas-editor" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+    allow="clipboard-read; clipboard-write" width="100%" height="550" frameborder="0"></iframe>
