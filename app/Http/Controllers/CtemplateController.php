@@ -27,7 +27,7 @@ class CtemplateController extends Controller
     public function create() {
         $data = [
             'content' => 'ctemplate.create'
-        ]);
+        ];
     }
 
     public function edit($id)
