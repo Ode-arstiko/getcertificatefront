@@ -7,9 +7,15 @@ use Illuminate\Support\Facades\Http;
 
 class CtemplateController extends Controller
 {
-    public function index()
+    protected $token;
+
+    public function __construct()
     {
-        $response = Http::get('http://localhost:8000/api/ctemplates');
+        $this->token = "tcYJOmIox4yCG2zC8pHj78Q5l1Wfs5rxgbMAqnJnGAJ7CfaJYQNbuQHnk0oT";
+    }
+
+    public function index() {
+        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->get('http://localhost:8000/api/ctemplates');
         $ctemplates = $response->json();
 
         return view('layouts.wrapper', [
@@ -18,9 +24,8 @@ class CtemplateController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return view('layouts.wrapper', [
+    public function create() {
+        $data = [
             'content' => 'ctemplate.create'
         ]);
     }
@@ -59,5 +64,11 @@ class CtemplateController extends Controller
         }
 
         return back()->with('error', 'Failed to update template');
+    }
+
+    public function delete($id) {
+        $id = decrypt($id);
+        Http::withHeaders(['X-API-TOKEN' => $this->token])->delete('http://localhost:8000/api/ctemplates/delete/' . $id);
+        return redirect()->back();
     }
 }
