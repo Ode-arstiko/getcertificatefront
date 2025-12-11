@@ -11,7 +11,7 @@ class CtemplateController extends Controller
 
     public function __construct()
     {
-        $this->token = "tcYJOmIox4yCG2zC8pHj78Q5l1Wfs5rxgbMAqnJnGAJ7CfaJYQNbuQHnk0oT";
+        $this->token = "Xxt3DInio269nCtyfYNY7OLDuC9LdAeUhjIhil5e0x9VdcJKAcKVRxY3Q2tD";
     }
 
     public function index() {
@@ -28,20 +28,14 @@ class CtemplateController extends Controller
         $data = [
             'content' => 'ctemplate.create'
         ];
+        return view('layouts.wrapper', $data);
     }
 
     public function edit($id)
     {
         $id = decrypt($id);
 
-        // 🔥 Ambil 1 data template sesuai ID
-        $response = Http::get("http://localhost:8000/api/ctemplates/{$id}");
-        $ctemplate = $response->json();
-
-        return view('layouts.wrapper', [
-            'content' => 'ctemplate.edit',
-            'ctemplate' => $ctemplate
-        ]);
+        return view('layouts.wrapper', ['content' => 'ctemplate.edit', 'id' => $id]);
     }
 
     public function update(Request $request, $id)

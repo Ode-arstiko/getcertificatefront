@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index']);
 
-Route::get('/ctemplates', [CtemplateController::class, 'index']);
+Route::get('/ctemplates', [CtemplateController::class, 'index'])->name('ctemplate.index');
 Route::get('/ctemplates/create', [CtemplateController::class, 'create']);
+Route::get('/ctemplates/edit/{id}', [CtemplateController::class, 'edit']);
 Route::delete('/ctemplates/delete/{id}', [CtemplateController::class, 'delete']);
 
 Route::get('/certificates', [CertificateController::class, 'index']);
