@@ -9,5 +9,7 @@ Route::get('/', [DashboardController::class, 'index']);
 
 Route::get('/ctemplates', [CtemplateController::class, 'index']);
 Route::get('/ctemplates/create', [CtemplateController::class, 'create']);
+Route::get('/ctemplate/edit/{id}', [CtemplateController::class, 'edit']);
+Route::put('/ctemplate/update/{id}', [CtemplateController::class, 'update']);
 
 Route::get('/certificates', [CertificateController::class, 'index']);

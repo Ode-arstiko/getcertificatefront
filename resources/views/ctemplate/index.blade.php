@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($ctemplate as $tmp)
+                    @foreach($ctemplate as $tmp)
                     <tr>
                         <td class="border-bottom-0">
                             <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
@@ -35,19 +35,18 @@
                             <p class="mb-0 fw-normal">{{ substr($tmp['created_at'], 0, 10) }}</p>
                         </td>
                         <td class="border-bottom-0">
-                            <a href="/admin/ctemplate/edit/{{ encrypt($tmp['id']) }}" class="btn btn-primary mb-0 shadow"><i class="ti ti-pencil me-2"></i>Edit</a>
+                            <a href="/ctemplate/edit/{{ encrypt($tmp['id']) }}" class="btn btn-primary mb-0 shadow"><i class="ti ti-pencil me-2"></i>Edit</a>
                         </td>
                         <td class="border-bottom-0">
-                            <form action="/admin/ctemplate/delete/{{ encrypt($tmp['id']) }}" method="POST">
+                            <form action="/ctemplate/delete/{{ encrypt($tmp['id']) }}" method="POST">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger mb-0 shadow"><i class="ti ti-trash me-2"></i>Delete</button>
                             </form>
                         </td>
                     </tr>
-                    @empty
 
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
