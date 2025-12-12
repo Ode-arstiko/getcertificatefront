@@ -12,4 +12,4 @@ Route::get('/ctemplates/create', [CtemplateController::class, 'create']);
 Route::get('/ctemplates/edit/{id}', [CtemplateController::class, 'edit']);
 Route::delete('/ctemplates/delete/{id}', [CtemplateController::class, 'delete']);
 
-Route::get('/certificates', [CertificateController::class, 'index']);
+Route::get('/certificates', [CertificateController::class, 'index'])->name('certificate.index');
