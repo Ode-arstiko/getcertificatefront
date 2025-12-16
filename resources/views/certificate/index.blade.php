@@ -1,3 +1,13 @@
+@if (session('certificateOnProcess'))
+    <div class="alert alert-success" role="alert">
+        {{ session('certificateOnProcess') }}
+    </div>
+@endif
+@if (session('httpError'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('httpError') }}
+    </div>
+@endif
 <div class="card w-100">
     <div class="card-body p-4">
         <div class="d-flex justify-between align-items-center">
@@ -13,8 +23,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Select Template</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <table class="table text-nowrap mb-0 align-middle">
@@ -92,20 +101,24 @@
                                 <p class="mb-0 fw-normal">{{ substr($zip['created_at'], 0, 10) }}</p>
                             </td>
                             <td class="border-bottom-0">
-                                <a href="/admin/certificate/detail/{{ encrypt($zip['id']) }}"
-                                    class="btn btn-primary mb-0 shadow"><i class="ti ti-pencil me-2"></i>Details</a>
+                                <a href="{{ route('certificates.detail', $zip['id']) }}"
+                                    class="btn btn-primary mb-0 shadow">
+                                    <i class="ti ti-pencil me-2"></i>Details
+                                </a>
                             </td>
                             <td class="border-bottom-0">
-                                <form action="/admin/certificate/delete/{{ encrypt($zip['id']) }}">
+                                <form action="/certificates/delete/{{ encrypt($zip['id']) }}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-danger" type="submit"><i class="ti ti-trash me-2"></i>Delete</button>
+                                    <button class="btn btn-danger" type="submit"><i
+                                            class="ti ti-trash me-2"></i>Delete</button>
                                 </form>
                             </td>
                             <td class="border-bottom-0">
-                                <a href="/downlaod-certificate-zip/{{ encrypt($zip['id']) }}"
-                                    class="btn btn-success mb-0 shadow"><i class="ti ti-download me-2"></i>Download
-                                    Zip</a>
+                                <a href="{{ route('certificates.download.zip', $zip['id']) }}"
+                                    class="btn btn-success mb-0 shadow">
+                                    <i class="ti ti-download me-2"></i>Download Zip
+                                </a>
                             </td>
                         </tr>
                     @empty
