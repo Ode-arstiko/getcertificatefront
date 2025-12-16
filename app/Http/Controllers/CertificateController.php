@@ -11,7 +11,7 @@ class CertificateController extends Controller
 
     public function __construct()
     {
-        $this->token = "Xxt3DInio269nCtyfYNY7OLDuC9LdAeUhjIhil5e0x9VdcJKAcKVRxY3Q2tD";   
+        $this->token = "vE2lRDPxc3iGadiwcbajooMV4zssadLC0hoXU5uaIgg5BipQBK7F6cdRqZIf";
     }
 
     public function index() {
@@ -26,7 +26,8 @@ class CertificateController extends Controller
         return view('layouts.wrapper', $data);
     }
 
-    public function create($id) {
+    public function create($id)
+    {
         $id = decrypt($id);
         $data = [
             'content' => 'certificate.create',
@@ -35,7 +36,8 @@ class CertificateController extends Controller
         return view('layouts.wrapper', $data);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'nama' => 'required',
             'juara' => 'required',
@@ -55,12 +57,85 @@ class CertificateController extends Controller
         }
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $id = decrypt($id);
 
         $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->delete('http://127.0.0.1:8000/api/certificates/delete/' . $id);
         // dd($response->json('respon'));
 
         return redirect()->back();
+    }
+
+    public function downloadZip($id)
+    {
+        $response = Http::withOptions([
+            'stream' => true
+        ])->get(
+            'http://127.0.0.1:8000/api/certificates/download-zip/' . $id
+        );
+
+        if ($response->failed()) {
+            dd($response->status(), $response->body());
+        }
+
+        // 🔥 ambil filename dari header API
+        $disposition = $response->header('Content-Disposition');
+        $filename = 'certificates.zip';
+
+        if ($disposition && preg_match('/filename="?([^"]+)"?/', $disposition, $matches)) {
+            $filename = $matches[1];
+        }
+
+        return response()->streamDownload(function () use ($response) {
+            echo $response->body();
+        }, $filename);
+    }
+
+
+    public function zipDetails($id)
+    {
+        // ambil data dari API
+        $response = Http::get(
+            'http://localhost:8000/api/certificates/' . $id
+        );
+
+        if ($response->failed()) {
+            abort(404);
+        }
+
+        $data = [
+            'content' => 'certificate.zip_details',
+            'zip' => $response->json()['zip'],
+            'certificates' => $response->json()['certificates']
+        ];
+
+        return view('layouts.wrapper', $data);
+    }
+
+    // download pdf per certificate
+    public function downloadCertificate($id)
+    {
+        $response = Http::withOptions([
+            'stream' => true
+        ])->get(
+            'http://localhost:8000/api/certificates/download/' . $id
+        );
+
+        if ($response->failed()) {
+            abort(404);
+        }
+
+        // ambil filename dari header API
+        $disposition = $response->header('Content-Disposition');
+        $filename = 'certificate.pdf';
+
+        if ($disposition && preg_match('/filename="?([^"]+)"?/', $disposition, $matches)) {
+            $filename = $matches[1];
+        }
+
+        return response()->streamDownload(function () use ($response) {
+            echo $response->body();
+        }, $filename);
     }
 }

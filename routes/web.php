@@ -16,3 +16,6 @@ Route::get('/certificates', [CertificateController::class, 'index']);
 Route::get('/certificates/create/{id}', [CertificateController::class, 'create']);
 Route::post('/certificates/store', [CertificateController::class, 'store']);
 Route::delete('/certificates/delete/{id}', [CertificateController::class, 'delete']);
+Route::get('/download-certificate-zip/{id}',[CertificateController::class, 'downloadZip'])->name('certificates.download.zip');
+Route::get('/certificates/detail/{id}', [CertificateController::class, 'zipDetails'])->name('certificates.detail');
+Route::get('/certificates/download/{id}', [CertificateController::class, 'downloadCertificate'])->name('certificates.download');

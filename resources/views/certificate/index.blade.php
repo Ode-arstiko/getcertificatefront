@@ -23,8 +23,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Select Template</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <table class="table text-nowrap mb-0 align-middle">
@@ -102,8 +101,10 @@
                                 <p class="mb-0 fw-normal">{{ substr($zip['created_at'], 0, 10) }}</p>
                             </td>
                             <td class="border-bottom-0">
-                                <a href="/certificates/detail/{{ encrypt($zip['id']) }}"
-                                    class="btn btn-primary mb-0 shadow"><i class="ti ti-pencil me-2"></i>Details</a>
+                                <a href="{{ route('certificates.detail', $zip['id']) }}"
+                                    class="btn btn-primary mb-0 shadow">
+                                    <i class="ti ti-pencil me-2"></i>Details
+                                </a>
                             </td>
                             <td class="border-bottom-0">
                                 <form action="/certificates/delete/{{ encrypt($zip['id']) }}" method="POST">
@@ -114,9 +115,10 @@
                                 </form>
                             </td>
                             <td class="border-bottom-0">
-                                <a href="/downlaod-certificate-zip/{{ encrypt($zip['id']) }}"
-                                    class="btn btn-success mb-0 shadow"><i class="ti ti-download me-2"></i>Download
-                                    Zip</a>
+                                <a href="{{ route('certificates.download.zip', $zip['id']) }}"
+                                    class="btn btn-success mb-0 shadow">
+                                    <i class="ti ti-download me-2"></i>Download Zip
+                                </a>
                             </td>
                         </tr>
                     @empty
