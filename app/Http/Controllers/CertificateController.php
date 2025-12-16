@@ -15,7 +15,7 @@ class CertificateController extends Controller
     }
 
     public function index() {
-        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->get('http://localhost:8000/api/certificates');
+        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->get('http://127.0.0.1:8000/api/certificates');
 
         $data = $response->json();
 
@@ -42,7 +42,7 @@ class CertificateController extends Controller
             'template_id' => 'required'
         ]);
         
-        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->post('http://localhost:8000/api/certificates/store', [
+        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->post('http://127.0.0.1:8000/api/certificates/store', [
             'nama' => $request->nama,
             'juara' => $request->juara,
             'template_id' => $request->template_id
@@ -58,7 +58,8 @@ class CertificateController extends Controller
     public function delete($id) {
         $id = decrypt($id);
 
-        Http::withHeaders(['X-API-TOKEN' => $this->token])->delete('http://localhost:8000/api/certificates/delete/' . $id);
+        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->delete('http://127.0.0.1:8000/api/certificates/delete/' . $id);
+        // dd($response->json('respon'));
 
         return redirect()->back();
     }
