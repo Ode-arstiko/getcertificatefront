@@ -11,19 +11,26 @@ class CertificateController extends Controller
 
     public function __construct()
     {
-        $this->token = "vE2lRDPxc3iGadiwcbajooMV4zssadLC0hoXU5uaIgg5BipQBK7F6cdRqZIf";
+        $this->token = "vE2lRDPxc3iGadiwcbajooMV4zssadLC0hoXU5uaIgg5BipQBK7F6cdRqZIf";   
     }
 
     public function index() {
-        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->get('http://localhost:8000/api/certificate');
-        $certificate = $response->json();
-        $template = $response->json();
-        $zips = $response->json();
+        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->get('http://localhost:8000/api/certificates');
+
+        $data = $response->json();
+
         $data = [
             'content' => 'certificate.index',
-            'certificate' => $certificate,
-            'template' => $template,
-            'zips' => $zips
+            'data' => $data,
+        ];
+        return view('layouts.wrapper', $data);
+    }
+
+    public function create($id) {
+        $id = decrypt($id);
+        $data = [
+            'content' => 'certificate.create',
+            'template_id' => $id
         ];
         return view('layouts.wrapper', $data);
     }

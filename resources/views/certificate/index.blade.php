@@ -32,6 +32,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($data['template'] as $temp)
+                                        <tr>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">
+                                                    {{ strlen($temp['template_name']) > 60 ? substr($temp['template_name'], 0, 60) . '...' : $temp['template_name'] }}
+                                                </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <a href="/certificates/create/{{ encrypt($temp['id']) }}"
+                                                    class="btn btn-primary mb-0 shadow"><i
+                                                        class="ti ti-send me-2"></i>Select</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -61,7 +78,38 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    @forelse($data['zips'] as $zip)
+                        <tr>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">
+                                    {{ strlen($zip['zip_name']) > 30 ? substr($zip['zip_name'], 0, 30) . '...' : $zip['zip_name'] }}
+                                </h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <p class="mb-0 fw-normal">{{ substr($zip['created_at'], 0, 10) }}</p>
+                            </td>
+                            <td class="border-bottom-0">
+                                <a href="/admin/certificate/detail/{{ encrypt($zip['id']) }}"
+                                    class="btn btn-primary mb-0 shadow"><i class="ti ti-pencil me-2"></i>Details</a>
+                            </td>
+                            <td class="border-bottom-0">
+                                <form action="/admin/certificate/delete/{{ encrypt($zip['id']) }}">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-danger" type="submit"><i class="ti ti-trash me-2"></i>Delete</button>
+                                </form>
+                            </td>
+                            <td class="border-bottom-0">
+                                <a href="/downlaod-certificate-zip/{{ encrypt($zip['id']) }}"
+                                    class="btn btn-success mb-0 shadow"><i class="ti ti-download me-2"></i>Download
+                                    Zip</a>
+                            </td>
+                        </tr>
+                    @empty
+                    @endforelse
                 </tbody>
             </table>
         </div>
