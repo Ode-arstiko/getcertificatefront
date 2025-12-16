@@ -34,4 +34,32 @@ class CertificateController extends Controller
         ];
         return view('layouts.wrapper', $data);
     }
+
+    public function store(Request $request) {
+        $request->validate([
+            'nama' => 'required',
+            'juara' => 'required',
+            'template_id' => 'required'
+        ]);
+        
+        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->post('http://localhost:8000/api/certificates/store', [
+            'nama' => $request->nama,
+            'juara' => $request->juara,
+            'template_id' => $request->template_id
+        ]);
+
+        if ($response->json('success') == true) {
+            return redirect('/certificates')->with('certificateOnProcess', 'Your certificates on process, please wait for a while...');
+        } else {
+            return redirect('/certificates')->with('httpError', 'Response request failed, aborted.');
+        }
+    }
+
+    public function delete($id) {
+        $id = decrypt($id);
+
+        Http::withHeaders(['X-API-TOKEN' => $this->token])->delete('http://localhost:8000/api/certificates/delete/' . $id);
+
+        return redirect()->back();
+    }
 }

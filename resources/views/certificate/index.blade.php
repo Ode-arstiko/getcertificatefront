@@ -1,3 +1,13 @@
+@if (session('certificateOnProcess'))
+    <div class="alert alert-success" role="alert">
+        {{ session('certificateOnProcess') }}
+    </div>
+@endif
+@if (session('httpError'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('httpError') }}
+    </div>
+@endif
 <div class="card w-100">
     <div class="card-body p-4">
         <div class="d-flex justify-between align-items-center">
@@ -92,14 +102,15 @@
                                 <p class="mb-0 fw-normal">{{ substr($zip['created_at'], 0, 10) }}</p>
                             </td>
                             <td class="border-bottom-0">
-                                <a href="/admin/certificate/detail/{{ encrypt($zip['id']) }}"
+                                <a href="/certificates/detail/{{ encrypt($zip['id']) }}"
                                     class="btn btn-primary mb-0 shadow"><i class="ti ti-pencil me-2"></i>Details</a>
                             </td>
                             <td class="border-bottom-0">
-                                <form action="/admin/certificate/delete/{{ encrypt($zip['id']) }}">
+                                <form action="/certificates/delete/{{ encrypt($zip['id']) }}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-danger" type="submit"><i class="ti ti-trash me-2"></i>Delete</button>
+                                    <button class="btn btn-danger" type="submit"><i
+                                            class="ti ti-trash me-2"></i>Delete</button>
                                 </form>
                             </td>
                             <td class="border-bottom-0">

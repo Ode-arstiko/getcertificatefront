@@ -24,6 +24,7 @@ Champion number 2
 Champion number 3">
 </textarea>
                 </div>
+                <input type="text" name="template_id" value="{{ $template_id }}" id="" hidden>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary shadow mt-3">Create</button>
                 </div>
