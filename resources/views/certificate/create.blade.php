@@ -2,11 +2,11 @@
     <h5 class="card-title fw-semibold mb-4"></h5>
     <div class="card">
         <div class="card-body">
-            <h3 class="form-label mb-5">Make Certificate</h3>
+            <h3 class="form-label mb-3">Make Certificate</h3>
             <form action="/certificates/store" method="POST">
                 @csrf
                 <input type="text" value="{{ $template_id }}" name="template_id" id="" hidden>
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="exampleInputEmail1" class="form-label">Input Name</label>
                     <textarea name="nama" class="form-control" id="" cols="30" rows="10"
                         placeholder="*example

@@ -1,14 +1,25 @@
-<div class="card w-100">
-    <div class="card-body p-4">
-        <div class="d-flex justify-between align-items-center mb-3">
-            <h5 class="card-title fw-semibold">
-                Certificates {{ $zip['zip_name'] ?? '' }}
-            </h5>
+<div class="p-3">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Certificates {{ $zip['zip_name'] ?? '' }}</h3>
+
+            <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="table-responsive">
-            <table class="table text-nowrap mb-0 align-middle">
-                <thead class="text-dark fs-4">
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height: 422px;">
+            <table class="table table-head-fixed text-nowrap">
+                <thead>
                     <tr>
                         <th>No.</th>
                         <th>Certificate Name</th>
@@ -54,5 +65,6 @@
                 </tbody>
             </table>
         </div>
+        <!-- /.card-body -->
     </div>
 </div>

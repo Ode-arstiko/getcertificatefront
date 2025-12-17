@@ -11,7 +11,7 @@ class CtemplateController extends Controller
 
     public function __construct()
     {
-        $this->token = "vE2lRDPxc3iGadiwcbajooMV4zssadLC0hoXU5uaIgg5BipQBK7F6cdRqZIf";
+        $this->token = "Xxt3DInio269nCtyfYNY7OLDuC9LdAeUhjIhil5e0x9VdcJKAcKVRxY3Q2tD";
     }
 
     public function index() {
@@ -36,28 +36,6 @@ class CtemplateController extends Controller
         $id = decrypt($id);
 
         return view('layouts.wrapper', ['content' => 'ctemplate.edit', 'id' => $id]);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $id = decrypt($id);
-
-        $request->validate([
-            'template_name' => 'required',
-            'elements' => 'required'
-        ]);
-
-        // 🔥 Kirim update ke API
-        $response = Http::put("http://localhost:8000/api/ctemplates/{$id}", [
-            'template_name' => $request->template_name,
-            'elements'      => json_encode($request->elements)
-        ]);
-
-        if ($response->successful()) {
-            return redirect('/ctemplates')->with('success', 'Template updated successfully');
-        }
-
-        return back()->with('error', 'Failed to update template');
     }
 
     public function delete($id) {

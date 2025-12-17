@@ -11,7 +11,7 @@ class CertificateController extends Controller
 
     public function __construct()
     {
-        $this->token = "vE2lRDPxc3iGadiwcbajooMV4zssadLC0hoXU5uaIgg5BipQBK7F6cdRqZIf";
+        $this->token = "Xxt3DInio269nCtyfYNY7OLDuC9LdAeUhjIhil5e0x9VdcJKAcKVRxY3Q2tD";
     }
 
     public function index() {
@@ -71,7 +71,7 @@ class CertificateController extends Controller
     {
         $response = Http::withOptions([
             'stream' => true
-        ])->get(
+        ])->withHeaders(['X-API-TOKEN' => $this->token])->get(
             'http://127.0.0.1:8000/api/certificates/download-zip/' . $id
         );
 
@@ -96,7 +96,7 @@ class CertificateController extends Controller
     public function zipDetails($id)
     {
         // ambil data dari API
-        $response = Http::get(
+        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->get(
             'http://localhost:8000/api/certificates/' . $id
         );
 
@@ -118,7 +118,7 @@ class CertificateController extends Controller
     {
         $response = Http::withOptions([
             'stream' => true
-        ])->get(
+        ])->withHeaders(['X-API-TOKEN' => $this->token])->get(
             'http://localhost:8000/api/certificates/download/' . $id
         );
 

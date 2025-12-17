@@ -1,12 +1,26 @@
-<div class="card w-100">
-    <div class="card-body p-4">
-        <div class="d-flex justify-between align-items-center">
-            <h5 class="card-title fw-semibold">Certificate Templates</h5>
-            <a href="/ctemplates/create" class="btn btn-primary shadow ms-3"><i class="ti ti-plus me-2"></i> Make Template</a>
+<div class="p-3">
+    <a href="/ctemplates/create" class="btn btn-primary shadow mt-3 mb-3"><i class="fas fa-plus mr-2"></i> Make
+        Template</a>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Certificate Templates</h3>
+
+            <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="table-responsive">
-            <table class="table text-nowrap mb-0 align-middle">
-                <thead class="text-dark fs-4">
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
                     <tr>
                         <th class="border-bottom-0">
                             <h6 class="fw-semibold mb-0">No.</h6>
@@ -23,32 +37,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($ctemplate as $tmp)
-                    <tr>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
-                        </td>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">{{ strlen($tmp['template_name']) > 60 ? substr($tmp['template_name'], 0, 60) . '...' : $tmp['template_name'] }}</h6>
-                        </td>
-                        <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">{{ substr($tmp['created_at'], 0, 10) }}</p>
-                        </td>
-                        <td class="border-bottom-0">
-                            <a href="/ctemplates/edit/{{ encrypt($tmp['id']) }}" class="btn btn-primary mb-0 shadow"><i class="ti ti-pencil me-2"></i>Edit</a>
-                        </td>
-                        <td class="border-bottom-0">
-                            <form action="/ctemplates/delete/{{ encrypt($tmp['id']) }}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger mb-0 shadow"><i class="ti ti-trash me-2"></i>Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-
+                    @foreach ($ctemplate as $tmp)
+                        <tr>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">
+                                    {{ strlen($tmp['template_name']) > 60 ? substr($tmp['template_name'], 0, 60) . '...' : $tmp['template_name'] }}
+                                </h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <p class="mb-0 fw-normal">{{ substr($tmp['created_at'], 0, 10) }}</p>
+                            </td>
+                            <td class="border-bottom-0">
+                                <a href="/ctemplates/edit/{{ encrypt($tmp['id']) }}"
+                                    class="btn btn-primary mb-0 shadow"><i class="fas fa-pen mr-2"></i>Edit</a>
+                            </td>
+                            <td class="border-bottom-0">
+                                <form action="/ctemplates/delete/{{ encrypt($tmp['id']) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger mb-0 shadow"><i
+                                            class="fas fa-trash mr-2"></i>Delete</button>
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+        <!-- /.card-body -->
     </div>
 </div>
