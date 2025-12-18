@@ -11,7 +11,7 @@ class CtemplateController extends Controller
 
     public function __construct()
     {
-        $this->token = "Xxt3DInio269nCtyfYNY7OLDuC9LdAeUhjIhil5e0x9VdcJKAcKVRxY3Q2tD";
+        $this->token = "CpyMg0LqqhBCSKRuDeDRQNWtaTElWZUNBlidU7AhhTXpluFljt47IrqERjTP";
     }
 
     public function index() {
