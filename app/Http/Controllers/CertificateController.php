@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class CertificateController extends Controller
@@ -11,11 +12,14 @@ class CertificateController extends Controller
 
     public function __construct()
     {
-        $this->token = "Xxt3DInio269nCtyfYNY7OLDuC9LdAeUhjIhil5e0x9VdcJKAcKVRxY3Q2tD";
+        $this->token = Cache::get('cert_api_token');
     }
 
     public function index() {
-        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->get('http://127.0.0.1:8000/api/certificates');
+        if(!Cache::has('cert_api_token')) {
+            return redirect()->back()->with('tokenInvalid', 'You dont have an active token.');
+        }
+        $response = Http::withToken($this->token)->get('http://127.0.0.1:8000/api/certificates');
 
         $data = $response->json();
 
@@ -44,7 +48,7 @@ class CertificateController extends Controller
             'template_id' => 'required'
         ]);
         
-        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->post('http://127.0.0.1:8000/api/certificates/store', [
+        $response = Http::withToken($this->token)->post('http://127.0.0.1:8000/api/certificates/store', [
             'nama' => $request->nama,
             'juara' => $request->juara,
             'template_id' => $request->template_id
@@ -61,7 +65,7 @@ class CertificateController extends Controller
     {
         $id = decrypt($id);
 
-        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->delete('http://127.0.0.1:8000/api/certificates/delete/' . $id);
+        $response = Http::withToken($this->token)->delete('http://127.0.0.1:8000/api/certificates/delete/' . $id);
         // dd($response->json('respon'));
 
         return redirect()->back();
@@ -71,7 +75,7 @@ class CertificateController extends Controller
     {
         $response = Http::withOptions([
             'stream' => true
-        ])->withHeaders(['X-API-TOKEN' => $this->token])->get(
+        ])->withToken($this->token)->get(
             'http://127.0.0.1:8000/api/certificates/download-zip/' . $id
         );
 
@@ -96,7 +100,7 @@ class CertificateController extends Controller
     public function zipDetails($id)
     {
         // ambil data dari API
-        $response = Http::withHeaders(['X-API-TOKEN' => $this->token])->get(
+        $response = Http::withToken($this->token)->get(
             'http://localhost:8000/api/certificates/' . $id
         );
 
@@ -118,7 +122,7 @@ class CertificateController extends Controller
     {
         $response = Http::withOptions([
             'stream' => true
-        ])->withHeaders(['X-API-TOKEN' => $this->token])->get(
+        ])->withToken($this->token)->get(
             'http://localhost:8000/api/certificates/download/' . $id
         );
 
