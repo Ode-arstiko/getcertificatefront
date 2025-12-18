@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CtemplateController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GetTokenController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -14,6 +15,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth'])->group(function (){
     Route::get('/logout', [AuthController::class,'logout'])->name('logout');
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/get-token', [GetTokenController::class, 'getToken']);
 
     Route::get('/ctemplates', [CtemplateController::class, 'index'])->name('ctemplate.index');
     Route::get('/ctemplates/create', [CtemplateController::class, 'create']);

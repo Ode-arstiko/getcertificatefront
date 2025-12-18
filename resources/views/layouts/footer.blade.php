@@ -2,7 +2,7 @@
     <!-- Control sidebar content goes here -->
     <div class="p-3">
         <h5>More Option</h5>
-        <a href="" class="btn btn-primary">My Token</a>
+        <a href="/get-token" class="btn btn-primary text-white">{{ Cache::has('cert_api_token') ? 'Refresh Token' : 'Get Token' }}</a>
     </div>
 </aside>
 <!-- /.control-sidebar -->
