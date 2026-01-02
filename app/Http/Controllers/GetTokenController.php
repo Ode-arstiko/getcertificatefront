@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 class GetTokenController extends Controller
 {
     public function getToken() {
-        $response = Http::post('http://127.0.0.1:8000/api/get-token', [
+        $response = Http::post('https://getcertificate-v1.vercel.app/api/api/get-token', [
             'app_id' => env('CERT_APP_ID'),
             'app_secret' => env('CERT_APP_SECRET')
         ]);
