@@ -19,7 +19,7 @@ class CtemplateController extends Controller
         if(!Cache::has('cert_api_token')) {
             return redirect('/')->with('tokenInvalid', 'You dont have an active token.');
         }
-        $response = Http::withToken($this->token)->get('http://localhost:8000/api/ctemplates');
+        $response = Http::withToken($this->token)->get('https://getcertificate-v1.vercel.app/api/api/ctemplates');
         $ctemplates = $response->json();
 
         return view('layouts.wrapper', [
@@ -29,7 +29,7 @@ class CtemplateController extends Controller
     }
 
     public function create() {
-        $response = Http::withToken($this->token)->post('http://127.0.0.1:8000/api/get-temp-token', [
+        $response = Http::withToken($this->token)->post('https://getcertificate-v1.vercel.app/api/api/get-temp-token', [
             'app_id' => env('CERT_APP_ID'),
             'app_secret' => env('CERT_APP_SECRET')
         ]);
@@ -38,7 +38,7 @@ class CtemplateController extends Controller
 
         $data = [
             'content' => 'ctemplate.create',
-            'url' => 'http://localhost:8000/canvas-editor?token=' . $dataResponse['access_token']
+            'url' => 'https://getcertificate-v1.vercel.app/canvas-editor?token=' . $dataResponse['access_token']
         ];
         return view('layouts.wrapper', $data);
     }
@@ -47,7 +47,7 @@ class CtemplateController extends Controller
     {
         $id = decrypt($id);
 
-        $response = Http::withToken($this->token)->post('http://127.0.0.1:8000/api/get-temp-token', [
+        $response = Http::withToken($this->token)->post('https://getcertificate-v1.vercel.app/api/api/get-temp-token', [
             'app_id' => env('CERT_APP_ID'),
             'app_secret' => env('CERT_APP_SECRET')
         ]);
@@ -56,7 +56,7 @@ class CtemplateController extends Controller
 
         $data = [
             'content' => 'ctemplate.edit',
-            'url' => 'http://localhost:8000/canvas-editor-edit/' . $id . '?token=' . $dataResponse['access_token']
+            'url' => 'https://getcertificate-v1.vercel.app/canvas-editor-edit/' . $id . '?token=' . $dataResponse['access_token']
         ];
 
         return view('layouts.wrapper', $data);
@@ -64,7 +64,7 @@ class CtemplateController extends Controller
 
     public function delete($id) {
         $id = decrypt($id);
-        Http::withToken($this->token)->delete('http://localhost:8000/api/ctemplates/delete/' . $id);
+        Http::withToken($this->token)->delete('https://getcertificate-v1.vercel.app/api/api/ctemplates/delete/' . $id);
         return redirect()->back();
     }
 }
