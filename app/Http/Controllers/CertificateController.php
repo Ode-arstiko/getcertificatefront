@@ -19,7 +19,7 @@ class CertificateController extends Controller
         if(!Cache::has('cert_api_token')) {
             return redirect()->back()->with('tokenInvalid', 'You dont have an active token.');
         }
-        $response = Http::withToken($this->token)->get('http://127.0.0.1:8000/api/certificates');
+        $response = Http::withToken($this->token)->get('https://getcertificate-v1.vercel.app/api/api/certificates');
 
         $data = $response->json();
 
@@ -48,7 +48,7 @@ class CertificateController extends Controller
             'template_id' => 'required'
         ]);
         
-        $response = Http::withToken($this->token)->post('http://127.0.0.1:8000/api/certificates/store', [
+        $response = Http::withToken($this->token)->post('https://getcertificate-v1.vercel.app/api/api/certificates/store', [
             'nama' => $request->nama,
             'juara' => $request->juara,
             'template_id' => $request->template_id
@@ -65,7 +65,7 @@ class CertificateController extends Controller
     {
         $id = decrypt($id);
 
-        $response = Http::withToken($this->token)->delete('http://127.0.0.1:8000/api/certificates/delete/' . $id);
+        $response = Http::withToken($this->token)->delete('https://getcertificate-v1.vercel.app/api/api/certificates/delete/' . $id);
         // dd($response->json('respon'));
 
         return redirect()->back();
@@ -76,7 +76,7 @@ class CertificateController extends Controller
         $response = Http::withOptions([
             'stream' => true
         ])->withToken($this->token)->get(
-            'http://127.0.0.1:8000/api/certificates/download-zip/' . $id
+            'https://getcertificate-v1.vercel.app/api/api/certificates/download-zip/' . $id
         );
 
         if ($response->failed()) {
@@ -101,7 +101,7 @@ class CertificateController extends Controller
     {
         // ambil data dari API
         $response = Http::withToken($this->token)->get(
-            'http://localhost:8000/api/certificates/' . $id
+            'https://getcertificate-v1.vercel.app/api/api/certificates/' . $id
         );
 
         if ($response->failed()) {
@@ -123,7 +123,7 @@ class CertificateController extends Controller
         $response = Http::withOptions([
             'stream' => true
         ])->withToken($this->token)->get(
-            'http://localhost:8000/api/certificates/download/' . $id
+            'https://getcertificate-v1.vercel.app/api/api/certificates/download/' . $id
         );
 
         if ($response->failed()) {
